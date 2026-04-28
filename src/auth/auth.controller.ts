@@ -35,4 +35,11 @@ export class AuthController {
     const userId = req.user.sub;
     return await this.authService.getProfile(userId);
   }
+
+  @UseGuards(AuthGuard)
+  @post('logout')
+  async logout(@Request() req) {
+    const userId = req.user.sub;
+    
+  }
 }
