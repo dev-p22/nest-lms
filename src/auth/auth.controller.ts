@@ -11,6 +11,7 @@ import { registerDto } from './dto/registerUser.dto';
 import { loginDto } from './dto/loginUser.dto';
 import { AuthGuard } from './auth.guard';
 
+
 @Controller('auth') // it is prefix if we create route then it start with auth/
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
@@ -34,12 +35,5 @@ export class AuthController {
   async profile(@Request() req) {
     const userId = req.user.sub;
     return await this.authService.getProfile(userId);
-  }
-
-  @UseGuards(AuthGuard)
-  @post('logout')
-  async logout(@Request() req) {
-    const userId = req.user.sub;
-    
   }
 }

@@ -9,10 +9,14 @@ import { User } from './schemas/user.schema';
 import { Model } from 'mongoose';
 import { loginDto } from 'src/auth/dto/loginUser.dto';
 import * as bcrypt from 'bcrypt';
+import { PurchaseService } from 'src/purchase/purchase.service';
 
 @Injectable()
 export class UserService {
-  constructor(@InjectModel(User.name) private userModel: Model<User>) {}
+  constructor(
+    @InjectModel(User.name) private userModel: Model<User>,
+    private purchaseService: PurchaseService,
+  ) {}
 
   async createUser(registerUserDto: registerDto) {
     try {
@@ -57,5 +61,9 @@ export class UserService {
     const user = await this.userModel.findById(userId).select('-password');
 
     return user;
+  }
+
+  async getAllPurchasesCourses(userId: string) {
+    return await this.purchaseService.getAllPurchasedCourse(userId);
   }
 }
